@@ -50,7 +50,7 @@
     .options {
         display: flex;
         margin-left: 22px;
-        overflow: hidden;
+        overflow-x: auto;
     }
 
     .option-box {
