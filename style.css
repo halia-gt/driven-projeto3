@@ -130,12 +130,8 @@
         display: flex;
         justify-content: center;
         align-items: center;
-    }
-
-    .footer button p {
+        padding: 0 80px;
         color: white;
         font-size: 20px;
-        text-align: center;
-        width: 200px;
     }
 }
