@@ -100,8 +100,13 @@
         color: white;
     }
 
+    .option-box:hover {
+        cursor: pointer;
+    }
+
     /* Selecionar */
     .green-select {
+        padding: 13px 9px;
         border: 5px solid #32B72F;
     }
 
@@ -122,10 +127,10 @@
         z-index: 1;
     }
 
-    .footer button {
+    .checkout-button {
         width: 364px;
         height: 61px;
-        background: #CBCBCB;
+        background-color: #CBCBCB;
         border-radius: 50px;
         border: none;
         display: flex;
@@ -136,9 +141,16 @@
         font-size: 20px;
     }
 
+    .green-button {
+        background-color: #32B72F;
+    }
+
+    .green-button:hover {
+        cursor: pointer;
+    }
+
     /* Conteúdo do modal */
     .modal {
-        display: none;
         position: fixed;
         z-index: 2;
         left: 0;
@@ -206,5 +218,9 @@
         background-color: #50D074;
         color: white;
         font-size: 20px;
+    }
+
+    .hidden {
+        display: none;
     }
 }
