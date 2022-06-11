@@ -1,12 +1,13 @@
 let plateSelected = false;
 let drinkSelected = false;
 let dessertSelected = false;
-let plateIndex = -1;
-let drinkIndex = -1;
-let dessertIndex = -1;
+let plateIndex;
+let drinkIndex;
+let dessertIndex;
 let plateProduct = [];
 let drinkProduct = [];
 let dessertProduct = [];
+let totalPrice = 0;
 
 
 const optionBox = document.querySelectorAll('.option-box');
@@ -15,6 +16,15 @@ for (let i = 0; i < optionBox.length; i++) {
         selectOption(i);
       });
 }
+
+const checkoutButton = document.querySelector('.checkout-button');
+checkoutButton.addEventListener('click', openModal);
+
+const confirmButton = document.querySelector('.confirm-button');
+confirmButton.addEventListener('click', confirmCheckout);
+
+const cancelButton = document.querySelector('.cancel-button');
+cancelButton.addEventListener('click', cancelCheckout);
 
 function selectOption(i) {
     if (i <= 3) {
@@ -42,6 +52,7 @@ function selectOption(i) {
 
     optionBox[i].classList.add('green-select');
     createProduct(i);
+    selectCheckout();
 }
 
 // Remove seleção
@@ -68,15 +79,52 @@ function createProduct(i) {
     }
 }
 
-
-// Função pra editar o botão de finalizar pedido
-
+// Libera botão de finalizar pedido
 function selectCheckout() {
-    const buttonCheckout = document.querySelector('.checkout-button')
+    const buttonCheckout = document.querySelector('.checkout-button');
 
-    //Aqui vou ter que fazer algum tipo de condição acho pra garantir que os três produtos estão selecionados.
-    buttonCheckout.classList.add('green-button');
-    buttonCheckout.innerHTML = "Fechar pedido";
+    if (plateSelected && drinkSelected && dessertSelected) {
+        buttonCheckout.classList.add('green-button');
+        buttonCheckout.innerHTML = "Fechar pedido";
+    }
 }
 
+// Abre o modal
+function openModal() {
+    if (checkoutButton.classList.contains('green-button')) {
+        editModal();
 
+        const modal = document.querySelector('.modal');
+        modal.classList.remove('hidden');
+    }
+}
+
+// Edita o modal antes de aparecer
+function editModal() {
+    const productList = document.querySelectorAll('td');
+    totalPrice = (plateProduct[1] + drinkProduct[1] + dessertProduct[1]);
+    const strTotalPrice = totalPrice.toFixed(2);
+    
+    productList[0].innerHTML = plateProduct[0];
+    productList[1].innerHTML = plateProduct[1].toFixed(2).replace(".", ",");
+    productList[2].innerHTML = drinkProduct[0];
+    productList[3].innerHTML = drinkProduct[1].toFixed(2).replace(".", ",");
+    productList[4].innerHTML = dessertProduct[0];
+    productList[5].innerHTML = dessertProduct[1].toFixed(2).replace(".", ",");
+    productList[7].innerHTML = `R$ ${strTotalPrice.replace(".", ",")}`;
+
+}
+// Confirmação de checkout
+function confirmCheckout() {
+    const name = prompt('Digite o seu nome:');
+    const endereco = prompt('Digite o seu endereço:');
+    const message = `Olá, gostaria de fazer o pedido:\n- Prato: ${plateProduct[0]}\n- Bebida: ${drinkProduct[0]}\n- Sobremesa: ${dessertProduct[0]}\nTotal: R$ ${totalPrice.toFixed(2).replace(".",",")}\n\nNome: ${name}\nEndereço: ${endereco}`;
+    const encodeText = encodeURIComponent(message);
+    location.href = `https://wa.me/?text=${encodeText}`;
+}
+
+// Cancelar checkout
+function cancelCheckout() {
+    const modal = document.querySelector('.modal');
+    modal.classList.add('hidden');
+}
