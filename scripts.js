@@ -1,15 +1,22 @@
+// Condição pra dizer se cada uma das opções está selecionada:
 let plateSelected = false;
 let drinkSelected = false;
 let dessertSelected = false;
+
+// Index da caixa que eu selecionei:
 let plateIndex;
 let drinkIndex;
 let dessertIndex;
+
+// Array com produto, [0] é nome, [1] é preço
 let plateProduct = [];
 let drinkProduct = [];
 let dessertProduct = [];
+
+// Preço total pra ser usado em mais de uma função
 let totalPrice = 0;
 
-
+// Adiciona evento listener nos botões e me dá o índice do botão, porque não queria usar onclick pra tantas opções no html
 const optionBox = document.querySelectorAll('.option-box');
 for (let i = 0; i < optionBox.length; i++) {
     optionBox[i].addEventListener('click', function() {
@@ -17,6 +24,7 @@ for (let i = 0; i < optionBox.length; i++) {
       });
 }
 
+// Minha versão de 'onclick' dos botões de finalizar pedido
 const checkoutButton = document.querySelector('.checkout-button');
 checkoutButton.addEventListener('click', openModal);
 
@@ -26,6 +34,7 @@ confirmButton.addEventListener('click', confirmCheckout);
 const cancelButton = document.querySelector('.cancel-button');
 cancelButton.addEventListener('click', cancelCheckout);
 
+// Seleciona e de-seleciona as comidas baseado no index fornecido
 function selectOption(i) {
     if (i <= 3) {
         if (plateSelected === true) {
@@ -48,7 +57,6 @@ function selectOption(i) {
         dessertIndex = i;
         dessertSelected = true;
     }
-
 
     optionBox[i].classList.add('green-select');
     createProduct(i);
